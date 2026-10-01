@@ -1,9 +1,9 @@
 ---
 name: make-mad
-description: 制作、重剪和精修 AMV/MAD（单动画、单集、综漫、静止系与混合）。当用户要求动漫音乐视频、音乐—叙事设计、1080p无字幕无Logo素材搜集、镜头检索、卡点剪辑、转场合成、调色、字幕音效或成片审查时使用。以可验证素材和逐轮审片完成选曲、故事设计、时间线、渲染与交付；不是随机切片、预设堆叠或用AI生成视频冒充原作素材。
-compatibility: 核心脚本需 Python 3.10+、FFmpeg/ffprobe、jsonschema 与 Pillow；音乐分析可选 numpy/librosa。复杂合成需实际可用的 AE、Fusion、Blender 或同等工具。没有相关工具时不得声称已渲染或已观看。
+description: 制作、重剪和精修 AMV/MAD（单动画、单集、综漫、静止系与混合）。当用户要求动漫音乐视频、音乐—叙事设计、BGM搜寻/选定/下载、逐作品逐集1080p生肉检索/下载、镜头检索、卡点剪辑、转场合成、调色、字幕音效或成片审查时使用。以可验证素材和逐轮审片完成选曲、故事设计、时间线、渲染与交付；不是随机切片、预设堆叠或用AI生成视频冒充原作素材。
+compatibility: 核心脚本需 Python 3.10+、FFmpeg/ffprobe、jsonschema 与 Pillow；音乐分析可选 numpy/librosa。公开媒体页下载可选 yt-dlp，BT可选 aria2或已有客户端。复杂合成需实际可用的 AE、Fusion、Blender 或同等工具。没有相关工具时不得声称已渲染或已观看。
 metadata:
-  version: "1.0.0"
+  version: "1.1.0"
   language: zh-CN
 ---
 
@@ -31,8 +31,8 @@ metadata:
 | 任务 | 必读文件 |
 |---|---|
 | 构思、单作/综漫结构 | [导演与构思](references/01-direction.md) |
-| 选曲、曲式、节奏 | [音乐设计](references/02-music.md) |
-| 搜集、下载、清洁源核验 | [素材协议](references/03-sources.md) |
+| BGM搜寻、选定、下载、曲式与节奏 | [音乐设计](references/02-music.md)、[BGM获取](references/12-bgm-acquisition.md) |
+| 每部动画的1080p生肉搜寻、下载与验收 | [素材协议](references/03-sources.md)、[逐集片源获取](references/13-anime-acquisition.md) |
 | 镜头库、分镜、卡点、粗剪 | [镜头与剪辑](references/04-editing.md) |
 | 转场、神级效果、预合成 | [转场与VFX](references/05-transitions-vfx.md) |
 | 漫画、插画、静止系 | [静止系](references/06-static-mad.md) |
@@ -59,7 +59,7 @@ metadata:
 
 只有标题、简介、搜索摘要时，只能登记元数据；禁止编造“0:42用了某转场”。`metadata / sampled_frames / partial_playback / full_playback` 必须区分；声音是否实际听到单独记录。参考作品不是可直接剪用的动画素材。
 
-未指定BGM时比较至少三首候选；至少两首进行关键乐段与候选镜头试配。用户锁定曲目则比较其段落结构方案，不擅自换曲。记录确切录音版本、来源、授权使用范围、动态/乐段、歌词视角和可剪辑性。
+按照 [BGM获取](references/12-bgm-acquisition.md) 实际搜索作者/发行商、音乐库和发现平台，核对下载入口与确切版本。未指定BGM时比较至少三首候选；至少两首进行关键乐段与候选镜头试配。用户锁定曲目则比较其段落结构方案，不擅自换曲。记录确切录音版本、来源、授权使用范围、动态/乐段、歌词视角和可剪辑性。
 
 音乐先构成具有开端与结尾的工作母带。`analyze-audio`只生成节拍、起音与能量候选；逐段确认半速/倍速错误、弱起、切分、变速与第一拍。歌词不要全量抄进研究表，只记必要语义与短锚点。
 
@@ -67,7 +67,9 @@ metadata:
 
 ### G2：素材发现、下载与索引
 
-按角色目标/动作/场景/情绪搜索作品与候选镜头，再查官方或有授权的高质量素材来源。下载使用官方提供的入口、用户合法提供的文件或经确认允许的直链；不绕过DRM、登录或付费限制。
+按照 [逐集片源获取](references/13-anime-acquisition.md) 先确认作品别名、季度/版本和必需集数，为每个作品/集数建立覆盖行。结合官方发行页、社区索引与发布组核对真实候选；RAW与可分离软字幕版均可初筛。下载按本地文件、正常下载按钮、公开HTTPS直链、允许下载的公开媒体页或已确认可取得的BT分流；不绕过DRM、登录或付费限制。
+
+从 `acquisition-brief.json` 用 `sources.py plan` 生成检索任务，再由联网agent/浏览器逐条执行并回填。这个脚本只规划，不搜索或下载。浏览器/yt-dlp/BT取得的本地文件用 `sources.py record` 写收据；直链用 `mad.py fetch`，再统一登记来源与审查。
 
 逐个登记作品/集数/版本、取得方式、使用依据、SHA256、分辨率、帧率、色彩、音轨、字幕轨。`probe`检查元数据；`contact`辅助索引；`scenes`产生镜头边界候选。
 
@@ -75,7 +77,7 @@ metadata:
 
 为每个镜头记录叙事作用、人物情绪、视线、主体位置、运动方向/阶段、动作顶点、色形连接点和源时间范围。搜索或检测找不到关键事件时，继续查证或改分镜，不能猜集数时间码。
 
-**出口：**可寻址且可验证的素材库、清洁源审查证据、覆盖关键叙事事件的镜头。
+**出口：**必需作品/集数覆盖表、真实下载收据、可寻址素材库、清洁源审查证据、覆盖关键叙事事件的镜头。检索计划、候选网页或已开始下载都不算素材就绪；缺口写明阻塞与备选。
 
 ### G3：纸上剪辑与关键段落原型
 
@@ -136,6 +138,9 @@ metadata:
 ```bash
 python scripts/mad.py doctor
 python scripts/mad.py init /path/to/project --name "作品名" --fps 24000/1001
+
+# 先填写初始化生成的 acquisition-brief.json，示例作品不能当成实际需求
+python scripts/sources.py plan /path/to/project/analysis/acquisition-brief.json --out /path/to/project/analysis/acquisition
 python scripts/mad.py probe /path/to/source.mkv --out /path/to/project/analysis/source.json
 python scripts/mad.py analyze-audio /path/to/music-work-master.wav --out /path/to/project/analysis/music --fps 24000/1001
 python scripts/mad.py validate /path/to/project/edit/timeline.json

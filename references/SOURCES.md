@@ -30,3 +30,22 @@
 使用升级后的工具时重新核验命令和接口，不把文档的`latest/main`当作本地版本。平台要求也应在真正交付前重新查官方来源。
 
 仅在有实际原作者说明或工程证据时，将某种方法归于某位作者。普通截图只能证明该时刻的画面，不能证明声音、连续运动、插件或工作流。
+
+## BGM与动画获取入口核对（2026-10-01）
+
+以下为本次联网核对的第一方说明/入口，支撑 [BGM获取](12-bgm-acquisition.md) 和 [逐集片源获取](13-anime-acquisition.md)。核对文档与网页入口不等于取得了任何真实歌曲或动画正片；下载条件、曲目和具体条目每次执行重新检查。
+
+| 编号 | 第一方来源 | 核对范围与本次边界 |
+|---|---|---|
+| A01 | [YouTube Audio Library官方帮助](https://support.google.com/youtube/answer/3376882?hl=en) | Studio筛选、MP3下载、部分曲目的署名；不能将平台自身说明外推为所有平台保证 |
+| A02 | [Bandcamp下载格式说明](https://get.bandcamp.help/en/articles/15263234-in-which-formats-can-i-download-my-purchases) | 正常下载页可选格式；未购买歌曲、未操作账户，不凭FLAC扩展名确认真实无损 |
+| A03 | [OpenTracks](https://opentracks.com/)、[使用条件](https://opentracks.com/help/articles/license/) | 第一方页面确认旧DOVA-SYNDROME于2026-09-15更名；查看当前曲目/作者条件，未逐曲下载 |
+| A04 | [BGMer使用条件](https://bgmer.net/terms/) | 当前官方下载与使用条件入口；没有将曲库统一当作不需核对的发布许可 |
+| A05 | [MusMus使用说明](https://musmus.main.jp/info.html) | 官方条件与署名入口；实际使用需记录适用曲目的要求 |
+| A06 | [SoundCloud下载说明](https://help.soundcloud.com/hc/en-us/articles/115003448787-Downloading-tracks) | 作者启用文件下载的正常入口；试听流和应用离线不同于可导出原件 |
+| A07 | [yt-dlp官方README](https://github.com/yt-dlp/yt-dlp) | 格式筛选、音频提取、配置隔离、下载范围与重试参数；工具支持不等于某条目允许下载，不保证网站长期可用 |
+| A08 | [aria2官方手册](https://aria2.github.io/manual/en/html/aria2c.html) | torrent文件列表/选择、磁力元数据、超时和做种行为；seed-time不阻止下载过程上传，本机未安装aria2做真实BT验证 |
+| A09 | [Anime Tosho官方About](https://animetosho.org/about) | 主要镜像范围、英文翻译分类及元数据入口；不是完整RAW目录，截图不等于逐选段clean验证 |
+| A10 | [Nyaa](https://nyaa.si/)、[Erai-raws](https://www.erai-raws.info/)、[SubsPlease](https://subsplease.org/) | 本次HTTP读取三个首页成功；Nyaa当前分类实际含Raw=1_4、English-translated=1_2。仅核对入口/分类，未验证任一作品完整性、种子活性或媒体下载；不使用未找到的/faq/路径 |
+
+AniList、网易云音乐、QQ音乐和Spotify在本包中仅列为发现/名称交叉检索入口；本次没有验证其账户下载流程。已取得文件的收据与来源声明仍需项目级复核。

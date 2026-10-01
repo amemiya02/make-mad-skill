@@ -1,0 +1,2 @@
+# Optional page-based downloads. Provider browser downloads and sources.py do not need this.
+yt-dlp

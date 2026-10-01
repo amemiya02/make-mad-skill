@@ -1,1 +1,1 @@
-candidate_id,title,artist,exact_version,source_url,local_path,usage_basis,opening_role,build_role,peak_role,ending_role,lyric_pov,available_shot_evidence,editability_risk,pilot_result,decision
+candidate_id,title,artist,exact_version,source_url,local_path,usage_basis,opening_role,build_role,peak_role,ending_role,lyric_pov,available_shot_evidence,editability_risk,pilot_result,decision,listening_status,listening_evidence,download_status,receipt,rejection_reason

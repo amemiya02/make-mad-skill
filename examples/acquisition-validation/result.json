@@ -1,0 +1,72 @@
+{
+  "date": "2026-10-01",
+  "make_mad": "1.1.0",
+  "scope": "Original synthetic media only; no third-party songs or anime downloaded",
+  "init_acquisition_templates": true,
+  "plan": {
+    "status": "planned_not_searched",
+    "search_jobs": 64,
+    "episode_requirements": 2,
+    "anime_titles": 1,
+    "unresolved_episode_mappings": 0
+  },
+  "audio_record": {
+    "status": "file_recorded_human_review_required",
+    "sha256": "bca6c1ecd930600f1c6c76e79d519d3f6354f97862a455e8a9bed89e70aa89d7",
+    "trusted_hash_matched": true,
+    "codec": "flac",
+    "sample_rate": "48000",
+    "duration": 2.0,
+    "review": {
+      "identity_version_episode": "pending",
+      "native_quality": "pending",
+      "clean_ranges": [],
+      "no_burned_subtitles": "not_applicable",
+      "no_logos": "not_applicable",
+      "playback_or_listening": "pending",
+      "usage_scope": "declared_not_independently_verified"
+    }
+  },
+  "https_fetch": {
+    "source": "https://raw.githubusercontent.com/amemiya02/make-mad-skill/c0e48e68451e258e6043b01a439573ffb8675664/examples/validation/synthetic-pipeline-test-1080p.mp4",
+    "status": "downloaded_and_hash_matched",
+    "bytes": 7521540,
+    "sha256": "16a4d12a75a947a0b3534b2bf8d376e52a1225e8f27c27f46a9da8642d94c297",
+    "hash_independently_verified": true,
+    "clean_source_status": "unreviewed",
+    "video_stream": {
+      "codec_type": "video",
+      "codec_name": "h264",
+      "width": 1920,
+      "height": 1080,
+      "r_frame_rate": "24/1"
+    }
+  },
+  "video_record": {
+    "status": "file_recorded_human_review_required",
+    "review": {
+      "identity_version_episode": "pending",
+      "native_quality": "pending",
+      "clean_ranges": [],
+      "no_burned_subtitles": "pending",
+      "no_logos": "pending",
+      "playback_or_listening": "pending",
+      "usage_scope": "declared_not_independently_verified"
+    }
+  },
+  "full_decode": {
+    "exit_code": 0,
+    "diagnostics": ""
+  },
+  "cli_plan_exit_code": 0,
+  "cli_record_exit_code": 0,
+  "yt_dlp_format_selection": {
+    "version": "2026.08.19",
+    "scope": "Synthetic metadata only; no provider media download",
+    "audio_selector": "ba/b",
+    "audio_selected": "audio",
+    "video_selector": "bv[width>=1920][height>=1080]+ba/b[width>=1920][height>=1080]",
+    "1080p_selected": "video1080+audio",
+    "720p_rejected": true
+  }
+}

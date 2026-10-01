@@ -1,0 +1,17 @@
+{
+  "project": "填写作品名；以下是输入格式示例，不是已经搜到的资源",
+  "music": {
+    "keywords": ["post-rock emotional crescendo instrumental", "切ない 希望 ピアノ 壮大"],
+    "locked_track": {"title": "", "artist": "", "version": ""}
+  },
+  "anime": [
+    {
+      "id": "frieren-s1",
+      "titles": ["葬送のフリーレン", "Sousou no Frieren", "Frieren Beyond Journey's End", "葬送的芙莉莲"],
+      "season": "S01 TV 2023",
+      "episodes": ["01", "02"],
+      "required_scenes": ["填写确实需要的事件；核实发生集数后再更新episodes"]
+    }
+  ],
+  "community_indexes": true
+}

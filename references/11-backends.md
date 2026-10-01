@@ -13,7 +13,7 @@ Agent负责素材研究、导演判断、镜头选择、音乐结构、分镜、
 | doctor | 环境→JSON | 实际FFmpeg、ffprobe、滤镜/编码器与Python依赖 |
 | init | 新目录→项目结构 | 不覆盖非空目录，模板空时间线不能渲染 |
 | probe | 本地媒体→JSON | 编码流元数据，不证明原生清晰度/clean source |
-| fetch | 确认后的下载清单→文件/来源侧车 | HTTPS直链、体积限制、可选可信hash、视频1080p门 |
+| fetch | 确认后的下载清单→文件/来源侧车 | HTTPS直链、体积限制、可选可信hash、真实音频流/视频1080p门 |
 | contact | 媒体→缩略图/索引 | 抽样浏览，不是完整观看 |
 | scenes | 视频→CSV | 场景变化候选，不是语义分镜 |
 | analyze-audio | 音乐工作母带→CSV/JSON | beat/onset/RMS建议，人工确定乐段/情绪 |
@@ -21,6 +21,10 @@ Agent负责素材研究、导演判断、镜头选择、音乐结构、分镜、
 | render | 合格时间线→MP4/日志 | 单画轨，切/溶解，常量变速，静图推移，多音轨，已有字幕 |
 | qa | MP4→JSON | 实解码、时长/帧数/峰值与候选黑场/静止 |
 | cutlist | 时间线→CSV | 标注conform单，不冒充原生NLE工程 |
+
+`scripts/sources.py` 另提供两项取得辅助命令：`plan` 把曲目关键词和逐作品/逐集需求生成URL任务及覆盖表，检索由宿主agent执行；`record` 检查实际本地文件、哈希和媒体流/尺寸，输出保留人工审查为pending的收据。它不自动搜索、下载或确认原生/无烧录字幕。
+
+公开媒体页可用实际安装的yt-dlp，BT可用aria2或已有客户端；均按获取指南和真实来源分流。`doctor.optional_download_tools` 只报告当前PATH是否找到程序，命令版本与网站支持情况运行时再核对。
 
 ## 明确不支持的基础自动化
 

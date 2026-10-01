@@ -28,7 +28,7 @@ import urllib.parse
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = '1.0.0'
+VERSION = '1.1.0'
 
 class MadError(Exception):
     pass
@@ -119,6 +119,7 @@ def doctor() -> dict:
     report = {'make_mad': VERSION, 'python': sys.version, 'binaries': {}, 'optional_python': {}}
     for name in ['ffmpeg', 'ffprobe']:
         report['binaries'][name] = run([name, '-version']).stdout.splitlines()[0] if shutil.which(name) else None
+    report['optional_download_tools'] = {name: shutil.which(name) for name in ['yt-dlp', 'aria2c']}
     for name in ['numpy', 'librosa', 'Pillow', 'jsonschema', 'opentimelineio']:
         try:
             report['optional_python'][name] = importlib.metadata.version(name)
@@ -139,7 +140,8 @@ def init_project(directory: Path, name: str, fps: str) -> dict:
     for folder in ['assets/video','assets/audio','assets/stills','assets/precomps','analysis',
                    'edit','renders','reviews','delivery','references']:
         (directory/folder).mkdir(parents=True, exist_ok=True)
-    for name_in in ['brief.md','music-shortlist.csv','reference-ledger.csv','shot-log.csv',
+    for name_in in ['brief.md','acquisition-brief.json','source-candidates.csv','anime-coverage.csv',
+                    'music-shortlist.csv','reference-ledger.csv','shot-log.csv',
                     'music-map.csv','effect-plan.csv','review.md','release-checklist.md']:
         dest = directory/('reviews' if name_in in ['review.md','release-checklist.md'] else 'analysis')/name_in
         shutil.copy2(ROOT/'templates'/name_in, dest)
@@ -571,9 +573,11 @@ def fetch(manifest: Path, output: Path, max_mb: int) -> dict:
             raise MadError('Download manifest requires '+field)
     if m.get('download_authorized') is not True:
         raise MadError('Manifest must record download_authorized=true; this is a user attestation, not a legal verification')
-    if m.get('expected_sha256') and not re.fullmatch(r'[a-fA-F0-9]{64}',m['expected_sha256']):
+    if m.get('kind') not in ('audio','video','precomp'):
+        raise MadError('Download kind must be audio, video or precomp')
+    if m.get('expected_sha256') and (not isinstance(m['expected_sha256'],str) or not re.fullmatch(r'[a-fA-F0-9]{64}',m['expected_sha256'])):
         raise MadError('expected_sha256 must be a trusted 64-character SHA256, or omitted')
-    if max_mb<=0 or output.exists():
+    if max_mb<=0 or output.exists() or output.with_suffix(output.suffix+'.source.json').exists():
         raise MadError('Positive size limit and a new output path are required')
     check_public_https(m['url'])
     output.parent.mkdir(parents=True,exist_ok=True)
@@ -581,7 +585,7 @@ def fetch(manifest: Path, output: Path, max_mb: int) -> dict:
     os.close(fd); tmp=Path(tmpname); count=0
     try:
         opener=urllib.request.build_opener(PublicRedirect())
-        with opener.open(urllib.request.Request(m['url'],headers={'User-Agent':'make-mad/1.0'}),timeout=30) as r,tmp.open('wb') as f:
+        with opener.open(urllib.request.Request(m['url'],headers={'User-Agent':f'make-mad/{VERSION}'}),timeout=30) as r,tmp.open('wb') as f:
             if int(r.headers.get('Content-Length','0'))>max_mb*1024*1024:
                 raise MadError('Download exceeds size limit')
             while True:
@@ -593,9 +597,14 @@ def fetch(manifest: Path, output: Path, max_mb: int) -> dict:
         if m.get('expected_sha256') and sha(tmp).lower()!=m['expected_sha256'].lower():
             raise MadError('Downloaded SHA256 mismatch')
         meta=probe(tmp)
-        if m.get('kind') in ('video','precomp'):
-            v=next((x for x in meta['streams'] if x['codec_type']=='video'),None)
-            if not v or v['width']<1920 or v['height']<1080:
+        kind='video' if m['kind']=='precomp' else m['kind']
+        stream=next((x for x in meta.get('streams',[]) if x.get('codec_type')==kind
+                     and not x.get('disposition',{}).get('attached_pic')),None)
+        duration=media_duration(meta,kind)
+        if not stream or not math.isfinite(duration) or duration<=0:
+            raise MadError(f'Downloaded file has no usable {kind} stream/duration')
+        if kind=='video':
+            if stream.get('width',0)<1920 or stream.get('height',0)<1080:
                 raise MadError('Downloaded video fails the >=1920x1080 raster gate')
         os.replace(tmp,output)
         result={'output':str(output.resolve()),'sha256':sha(output),'bytes':count,

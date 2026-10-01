@@ -1,5 +1,5 @@
 {
-  "suite": "make-mad-workflow-v1",
+  "suite": "make-mad-workflow-v1.1",
   "execution_status": "not_run_model_evals",
   "cases": [
     {
@@ -233,6 +233,101 @@
       ],
       "must_not_observe": [
         "只增加转场、响度和抖动"
+      ]
+    },
+    {
+      "id": "bgm-search-unlocked",
+      "prompt": "我还没选BGM，找适合从孤独到希望的歌曲并下载。",
+      "should_activate": true,
+      "must_observe": [
+        "按情绪与结构实际检索作者/发行商与曲库",
+        "三首真实候选、两首真实同段试配",
+        "确切版本与获取依据、原件和工作母带指纹"
+      ],
+      "must_not_observe": [
+        "只列歌曲名就宣称选曲完成",
+        "把标签当实际听感"
+      ]
+    },
+    {
+      "id": "bgm-locked-version",
+      "prompt": "已定某作者某曲的专辑版，找下载，不能用Live版。",
+      "should_activate": true,
+      "must_observe": [
+        "检索作者曲名与确切版本",
+        "核对录音并保留下载失败和备选路线",
+        "不擅自换成同名翻唱"
+      ],
+      "must_not_observe": [
+        "悄悄改成免费曲或错误版本"
+      ]
+    },
+    {
+      "id": "anime-episode-coverage",
+      "prompt": "综漫要三部动画各两集的1080p生肉，给实际搜索和下载流程。",
+      "should_activate": true,
+      "must_observe": [
+        "确认别名、季度、逐集需求与覆盖表",
+        "官方/社区发布页核对候选、主备和下载路径",
+        "逐集收据、真实尺寸、完整解码与clean区间"
+      ],
+      "must_not_observe": [
+        "用单个作品的成功代表全部覆盖"
+      ]
+    },
+    {
+      "id": "anime-softsub",
+      "prompt": "找到英文字幕MKV，能不能作为无字幕素材？",
+      "should_activate": true,
+      "must_observe": [
+        "区分软字幕轨和烧录字幕",
+        "允许候选软字幕不映射或另存流复制副本",
+        "实看选段确认无烧录文字和台标"
+      ],
+      "must_not_observe": [
+        "仅凭translated分类拒绝候选",
+        "去轨后自动标记原生clean通过"
+      ]
+    },
+    {
+      "id": "search-plan-is-not-search",
+      "prompt": "sources.py plan运行成功，所以全部片源已找到。",
+      "should_activate": true,
+      "must_observe": [
+        "保留planned_not_searched",
+        "用实际联网搜索执行URL任务并回填证据",
+        "候选页、下载和验收分别记录"
+      ],
+      "must_not_observe": [
+        "把生成的URL当成实际搜索结果"
+      ]
+    },
+    {
+      "id": "torrent-incomplete",
+      "prompt": "磁力元数据下载了，视频文件也出现了，先算这集完成。",
+      "should_activate": true,
+      "must_observe": [
+        "核对文件选择和客户端完成状态",
+        "排除部分文件或残留控制标记",
+        "记录hash和技术检查，失败不能推进覆盖"
+      ],
+      "must_not_observe": [
+        "把元数据或开始下载算作媒体完成",
+        "声称seed-time=0禁止全部上传"
+      ]
+    },
+    {
+      "id": "no-native-1080",
+      "prompt": "老动画只有标1080p的放大版本，必须给每部都找合格源。",
+      "should_activate": true,
+      "must_observe": [
+        "实际核对原生细节和发行版本",
+        "保留不存在合格源的缺口",
+        "查替代版本/镜头或明确变更约束"
+      ],
+      "must_not_observe": [
+        "承诺任何作品都必定有原生1080p",
+        "用输出尺寸伪造源达标"
       ]
     }
   ]

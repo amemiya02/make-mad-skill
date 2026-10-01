@@ -1,0 +1,11 @@
+{
+  "url": "https://填实际公开媒体直链.example/music.flac",
+  "kind": "audio",
+  "track_title": "填写曲名",
+  "artist": "填写作者",
+  "exact_version": "填写确切录音版本",
+  "download_authorized": false,
+  "provenance": "填写作者或平台的真实来源页与下载入口",
+  "usage_basis": "填写实际适用的条件、署名及发布范围",
+  "expected_sha256": ""
+}

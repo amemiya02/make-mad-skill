@@ -1,4 +1,4 @@
-# make-mad · v1.0.0
+# make-mad · v1.1.0
 
 **面向高质量 AMV/MAD 的导演—剪辑—后期工作流 skill，附实际可运行的基础媒体工具。**
 
@@ -11,12 +11,13 @@
 | 路径 | 用途 |
 |---|---|
 | `SKILL.md` | 触发条件、行为准则、G0–G7制作与审片流程 |
-| `references/` | 10份制作指南、参考作品证据审计、可核验来源 |
+| `references/` | 制作指南、BGM获取、逐集1080p片源获取、参考审计与可核验来源 |
 | `templates/` | 创作简报、选曲、镜头库、音乐地图、VFX卡、审片表、严格时间线schema |
 | `scripts/mad.py` | 11个CLI命令：素材、音乐、时间线、基础渲染、质检 |
-| `tests/` | 43项契约测试与合成素材端到端测试 |
+| `scripts/sources.py` | 检索任务/逐集覆盖表规划、实际下载文件收据；不冒充已搜索 |
+| `tests/` | 67项契约测试与合成素材端到端测试 |
 | `examples/` | 环境、真实测试输出、原创导演练习，不含未授权动画/音乐 |
-| `evals/` | 18个agent工作流评估案例；测试定义，不冒充已经跑过的模型评测 |
+| `evals/` | 25个agent工作流评估案例；测试定义，不冒充已经跑过的模型评测 |
 | `TEST_REPORT.md` | 实测范围、结果、修复项与未验证边界 |
 
 ## 安装与调用
@@ -133,15 +134,45 @@ python scripts/mad.py qa ../my-mad/renders/delivery.mp4 --timeline ../my-mad/edi
 
 已有输出默认不覆盖；明确需要时传入`--overwrite`。渲染日志含时间线与输出指纹。`--normalize`是可选的两遍响度归一化，不默认改动混音；使用后仍需聆听和检查编码后的音频。
 
-## 下载功能
+## BGM与逐部动画的搜寻、选定和下载
 
-`fetch`只接收来源和可使用依据明确的**公开HTTPS媒体直链**。先复制并填写`templates/source-download.json`，确认下载允许，再执行：
+完整方案分为 [BGM获取指南](references/12-bgm-acquisition.md) 与 [逐集1080p片源获取指南](references/13-anime-acquisition.md)。前者列出作者/发行商、Bandcamp、OpenTracks、BGMer、MusMus、YouTube Audio Library等实际入口，以及三首候选、两首同段试配、录音版本锁定和下载路线；后者覆盖作品别名/季度/集数、官方发行页、Nyaa RAW与软字幕分类、发布组、镜像交叉核对、版本比较与逐集验收。
+
+初始化会复制 `analysis/acquisition-brief.json`。先替换示例为真实曲目方向、动画名称/版本和所需集数，再生成一个新的取得工作目录：
 
 ```bash
-python scripts/mad.py fetch ../my-mad/source-download.json --out ../my-mad/assets/video/source.mkv --max-mb 8192
+python scripts/sources.py plan ../my-mad/analysis/acquisition-brief.json --out ../my-mad/analysis/acquisition
 ```
 
-网页URL不等于媒体直链。此命令不实现B站视频解析、付费绕过、DRM解密或台标擦除；也不替代官方授权下载入口。没有可信预期SHA256时可留空，下载后会计算文件指纹，但不会宣称独立验证了来源真实性。首次对外下载的成功路径本次未联网实测。
+输出 `search-jobs.csv`、`music-shortlist.csv`、`source-candidates.csv`、`anime-coverage.csv` 和原始简报。**plan只规划检索URL**，联网agent/浏览器还需执行搜索、读取来源页和回填真实结果。每个必需集数独立计数；未知集数标为待确认。
+
+下载按实际来源分流：提供者正常文件按钮或本地原件 → 公开HTTPS媒体直链 → 已确认允许下载的无DRM公开页面用可选yt-dlp → 已确认可取得的BT用已有客户端或aria2。BGM保存原件并另建WAV工作母带；动画保存逐集原件、去软字幕副本和代理的独立路径。
+
+公开HTTPS媒体直链分别填写 `templates/bgm-download.json` 或 `templates/source-download.json`：
+
+```bash
+python scripts/mad.py fetch ../my-mad/bgm-download.json --out ../my-mad/assets/audio/originals/bgm.flac --max-mb 512
+python scripts/mad.py fetch ../my-mad/E01-download.json --out ../my-mad/assets/video/work-id/BD/E01-original.mkv --max-mb 8192
+```
+
+扩展名和大小上限按实际文件设置。`fetch`验证真实音频流或至少1920×1080的视频流、正时长、体积和可选可信SHA256，写 `.source.json`；它不把网页、磁力或种子解析成媒体。其他下载方式取得的文件填写 `templates/download-record.json` 后统一登记：
+
+```bash
+python scripts/sources.py record ../my-mad/assets/video/work-id/BD/E01-original.mkv --manifest ../my-mad/E01-record.json --out ../my-mad/analysis/acquisition/E01-receipt.json
+```
+
+文件存在、技术通过、正确版本、原生细节和无烧录文字分别检查。收据不自动通过人工审查；有缺口的作品/集数保持未完成，不能用720p放大补齐。歌曲的试听与试配同样不能由元数据代替。
+
+可选下载工具：
+
+```bash
+python -m pip install -r requirements-download.txt
+yt-dlp --version
+# aria2为独立程序；使用本机包管理器或其官方安装包，随后核实
+aria2c --version
+```
+
+完整格式选择、文件选择、有限重试和验证命令在两份获取指南中。安装skill不会自动安装这些程序，也不会提供账户、购买或受限平台的下载通道。文件指纹不是独立的来源真实性证明；可信预期SHA256缺失时如实保留未独立验证状态。
 
 ## 时间线契约
 

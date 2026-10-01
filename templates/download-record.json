@@ -1,0 +1,11 @@
+{
+  "kind": "video",
+  "work_id": "填写对应的作品ID",
+  "episode": "填写实际集数；音乐文件改用track_title/artist/exact_version",
+  "source_page": "https://填真实来源页.example/",
+  "retrieval_method": "browser",
+  "download_authorized": false,
+  "provenance": "填写作品、季、集数、发行版、发布者及来源页",
+  "usage_basis": "记录实际获得的下载/剪辑/发布范围；未确认的范围仍待确认",
+  "expected_sha256": ""
+}
