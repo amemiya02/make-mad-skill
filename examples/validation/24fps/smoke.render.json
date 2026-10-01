@@ -1,0 +1,39 @@
+{
+  "timeline_sha256": "3cbb059fadcdbce834745a2dce73c8c2f51b07057b45748ec48a8f8e26e34221",
+  "version": "1.0.0",
+  "draft": false,
+  "limitations": [
+    "one picture track",
+    "constant retimes only",
+    "SDR only",
+    "H.264 review/delivery render, not an archival mezzanine",
+    "advanced VFX must be precomposed"
+  ],
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "v: unspecified transfer metadata; inspect/record color interpretation",
+      "i: unspecified transfer metadata; inspect/record color interpretation"
+    ],
+    "duration_frames": 144,
+    "duration_seconds": 6.0,
+    "review_status": "declared_by_editor_not_independently_verified"
+  },
+  "pre_encode_loudness": {
+    "input_i": "-26.17",
+    "input_tp": "-17.05",
+    "input_lra": "0.50",
+    "input_thresh": "-36.17",
+    "output_i": "-16.10",
+    "output_tp": "-6.98",
+    "output_lra": "0.60",
+    "output_thresh": "-26.10",
+    "normalization_type": "dynamic",
+    "target_offset": "0.10"
+  },
+  "normalization_log": "[aist#0:0/pcm_f32le @ 0x5624cee564c0] Guessed Channel Layout: stereo\nInput #0, wav, from '/mnt/data/mad-test-24-final/make-mad-ybg6p5pr/mix.wav':\n  Metadata:\n    encoder         : Lavf61.7.103\n  Duration: 00:00:06.00, bitrate: 3072 kb/s\n  Stream #0:0: Audio: pcm_f32le ([3][0][0][0] / 0x0003), 48000 Hz, stereo, flt, 3072 kb/s\nStream mapping:\n  Stream #0:0 -> #0:0 (pcm_f32le (native) -> pcm_s24le (native))\nOutput #0, wav, to '/mnt/data/mad-test-24-final/make-mad-ybg6p5pr/normalized.wav':\n  Metadata:\n    ISFT            : Lavf61.7.103\n  Stream #0:0: Audio: pcm_s24le ([1][0][0][0] / 0x0001), 48000 Hz, stereo, s32 (24 bit), 2304 kb/s\n      Metadata:\n        encoder         : Lavc61.19.101 pcm_s24le\n[Parsed_loudnorm_0 @ 0x7f411c002340] \n{\n\t\"input_i\" : \"-26.05\",\n\t\"input_tp\" : \"-17.05\",\n\t\"input_lra\" : \"0.40\",\n\t\"input_thresh\" : \"-36.05\",\n\t\"output_i\" : \"-15.87\",\n\t\"output_tp\" : \"-6.88\",\n\t\"output_lra\" : \"0.50\",\n\t\"output_thresh\" : \"-25.87\",\n\t\"normalization_type\" : \"linear\",\n\t\"target_offset\" : \"-0.13\"\n}\n[out#0/wav @ 0x5624cee56680] video:0KiB audio:1688KiB subtitle:0KiB other streams:0KiB global headers:0KiB muxing overhead: 0.005903%\nsize=    1688KiB time=00:00:06.00 bitrate=2304.1kbits/s speed= 291x    \n",
+  "output": "/mnt/data/mad-test-24-final/smoke.mp4",
+  "output_sha256": "16a4d12a75a947a0b3534b2bf8d376e52a1225e8f27c27f46a9da8642d94c297",
+  "status": "rendered_not_quality_approved"
+}

@@ -1,0 +1,15 @@
+{
+  "audio_sha256": "36b4bd8190a3f754e82eaade4ef3d1b2f9c79771682a0c687101f25751e22ad9",
+  "duration_seconds": 8.0,
+  "fps": "24",
+  "estimated_bpm": 120.18531976744185,
+  "beat_proposals": 15,
+  "status": "unreviewed_proposals",
+  "limitations": [
+    "not downbeats",
+    "not phrase boundaries",
+    "tempo octave errors possible",
+    "RMS is not emotion",
+    "re-run on the locked edited music master after any structural music edit"
+  ]
+}

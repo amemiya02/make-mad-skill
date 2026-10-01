@@ -1,0 +1,1 @@
+shot_id,asset_id,work,episode,edition,source_in_seconds,source_out_seconds,action_apex_seconds,character,emotional_state,narrative_function,screen_direction,gaze_target,subject_position,motion_vector,motion_phase,shape_anchor,color_anchor,handle_in_frames,handle_out_frames,clean_range_review,quality_notes,evidence_path

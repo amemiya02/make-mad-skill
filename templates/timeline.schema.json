@@ -1,0 +1,424 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": "1.0"
+    },
+    "name": {
+      "type": "string"
+    },
+    "fps": {
+      "type": "string",
+      "pattern": "^-?[0-9]+(?:\\.[0-9]+|/[1-9][0-9]*)?$"
+    },
+    "width": {
+      "const": 1920
+    },
+    "height": {
+      "const": 1080
+    },
+    "duration_frames": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "kind": {
+            "enum": [
+              "video",
+              "audio",
+              "image",
+              "precomp"
+            ]
+          },
+          "provenance": {
+            "type": "string"
+          },
+          "usage_basis": {
+            "type": "string"
+          },
+          "review": {
+            "type": "object",
+            "properties": {
+              "native_quality": {
+                "enum": [
+                  "pending",
+                  "pass",
+                  "fail",
+                  "not_applicable"
+                ]
+              },
+              "no_burned_subtitles": {
+                "enum": [
+                  "pending",
+                  "pass",
+                  "fail",
+                  "not_applicable"
+                ]
+              },
+              "no_logos": {
+                "enum": [
+                  "pending",
+                  "pass",
+                  "fail",
+                  "not_applicable"
+                ]
+              },
+              "color_interpretation": {
+                "enum": [
+                  "pending",
+                  "pass",
+                  "fail",
+                  "not_applicable"
+                ]
+              },
+              "evidence": {
+                "type": "string"
+              },
+              "clean_ranges": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "string",
+                      "pattern": "^-?[0-9]+(?:\\.[0-9]+|/[1-9][0-9]*)?$"
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^-?[0-9]+(?:\\.[0-9]+|/[1-9][0-9]*)?$"
+                    }
+                  ],
+                  "minItems": 2,
+                  "maxItems": 2
+                }
+              }
+            },
+            "required": [
+              "native_quality",
+              "no_burned_subtitles",
+              "no_logos",
+              "color_interpretation",
+              "evidence",
+              "clean_ranges"
+            ],
+            "additionalProperties": false
+          },
+          "source_lineage": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "path",
+          "kind",
+          "provenance",
+          "usage_basis",
+          "review"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "shots": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "asset_id": {
+            "type": "string"
+          },
+          "source_in": {
+            "type": "string",
+            "pattern": "^-?[0-9]+(?:\\.[0-9]+|/[1-9][0-9]*)?$"
+          },
+          "speed": {
+            "type": "string",
+            "pattern": "^-?[0-9]+(?:\\.[0-9]+|/[1-9][0-9]*)?$"
+          },
+          "start_frame": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "duration_frames": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "transition_in": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "enum": [
+                  "cut",
+                  "dissolve"
+                ]
+              },
+              "duration_frames": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "required": [
+              "type",
+              "duration_frames"
+            ],
+            "additionalProperties": false
+          },
+          "narrative_function": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sync_anchor": {
+            "type": "string"
+          },
+          "motion": {
+            "type": "object",
+            "properties": {
+              "zoom_start": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "zoom_end": {
+                "type": "number",
+                "minimum": 1,
+                "maximum": 3
+              },
+              "x_start": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "x_end": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "y_start": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "y_end": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "zoom_start",
+              "zoom_end",
+              "x_start",
+              "x_end",
+              "y_start",
+              "y_end"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "asset_id",
+          "source_in",
+          "speed",
+          "start_frame",
+          "duration_frames",
+          "transition_in",
+          "narrative_function",
+          "sync_anchor"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "audio": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "asset_id": {
+            "type": "string"
+          },
+          "source_in": {
+            "type": "string",
+            "pattern": "^-?[0-9]+(?:\\.[0-9]+|/[1-9][0-9]*)?$"
+          },
+          "start_frame": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "duration_frames": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "gain_db": {
+            "type": "number",
+            "minimum": -96,
+            "maximum": 24
+          },
+          "fade_in_frames": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "fade_out_frames": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "asset_id",
+          "source_in",
+          "start_frame",
+          "duration_frames",
+          "gain_db",
+          "fade_in_frames",
+          "fade_out_frames"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "caption_file": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "audio_target": {
+      "type": "object",
+      "properties": {
+        "integrated_lufs": {
+          "type": "number",
+          "minimum": -30,
+          "maximum": -10
+        },
+        "true_peak_dbtp": {
+          "type": "number",
+          "minimum": -6,
+          "maximum": -1
+        },
+        "lra": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 30
+        }
+      },
+      "required": [
+        "integrated_lufs",
+        "true_peak_dbtp",
+        "lra"
+      ],
+      "additionalProperties": false
+    },
+    "reviews": {
+      "type": "object",
+      "properties": {
+        "music_map": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        },
+        "story": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        },
+        "rhythm": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        },
+        "sound": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        },
+        "color": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        },
+        "effects": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        },
+        "captions": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        },
+        "flash_review": {
+          "enum": [
+            "pending",
+            "pass",
+            "fail",
+            "not_applicable"
+          ]
+        }
+      },
+      "required": [
+        "music_map",
+        "story",
+        "rhythm",
+        "sound",
+        "color",
+        "effects",
+        "captions",
+        "flash_review"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "name",
+    "fps",
+    "width",
+    "height",
+    "duration_frames",
+    "assets",
+    "shots",
+    "audio",
+    "caption_file",
+    "audio_target",
+    "reviews"
+  ],
+  "additionalProperties": false,
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/make-mad/timeline.schema.json",
+  "title": "make-mad baseline timeline v1; unsupported fields are errors, not silently ignored"
+}

@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "test_type": "synthetic integration, not AMV artistic evaluation",
+  "fps": "24000/1001",
+  "profile": "draft",
+  "decoded_frames": 144,
+  "validation": {
+    "ok": true,
+    "errors": [],
+    "warnings": [
+      "v: unspecified transfer metadata; inspect/record color interpretation",
+      "i: unspecified transfer metadata; inspect/record color interpretation"
+    ],
+    "duration_frames": 144,
+    "duration_seconds": 6.006,
+    "review_status": "declared_by_editor_not_independently_verified"
+  },
+  "render_status": "rendered_not_quality_approved",
+  "automated_qa": "technical_checks_pass_human_review_required"
+}

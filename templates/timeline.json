@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "name": "Untitled MAD",
+  "fps": "24000/1001",
+  "width": 1920,
+  "height": 1080,
+  "duration_frames": 0,
+  "assets": [],
+  "shots": [],
+  "audio": [],
+  "caption_file": null,
+  "audio_target": {
+    "integrated_lufs": -16,
+    "true_peak_dbtp": -1.5,
+    "lra": 11
+  },
+  "reviews": {
+    "music_map": "pending",
+    "story": "pending",
+    "rhythm": "pending",
+    "sound": "pending",
+    "color": "pending",
+    "effects": "pending",
+    "captions": "pending",
+    "flash_review": "pending"
+  }
+}

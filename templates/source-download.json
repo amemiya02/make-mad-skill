@@ -1,0 +1,8 @@
+{
+  "url": "https://YOUR-AUTHORIZED-SOURCE.example/original-media.mkv",
+  "kind": "video",
+  "download_authorized": false,
+  "provenance": "填写官方或授权来源、作品与版本；不把研究参考视频当动画生肉",
+  "usage_basis": "记录下载/编辑/发布各自依据；不等于工具已核验法律状态",
+  "expected_sha256": "填可信来源提供的64位SHA256；没有则删除此字段，并在隔离区下载后记录新指纹"
+}

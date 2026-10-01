@@ -1,0 +1,6 @@
+interface:
+  display_name: "make-mad"
+  short_description: "AMV/MAD导演、选曲、合格素材、精剪合成与逐轮审片"
+  default_prompt: "使用 $make-mad 制作或精修AMV/MAD，先建立音乐—叙事方案并核验素材，再实际试剪、审片和交付。"
+policy:
+  allow_implicit_invocation: true
