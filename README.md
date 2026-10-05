@@ -1,4 +1,4 @@
-# make-mad · v1.1.0
+# make-mad · v1.2.0
 
 **面向高质量 AMV/MAD 的导演—剪辑—后期工作流 skill，附实际可运行的基础媒体工具。**
 
@@ -15,6 +15,11 @@
 | `templates/` | 创作简报、选曲、镜头库、音乐地图、VFX卡、审片表、严格时间线schema |
 | `scripts/mad.py` | 11个CLI命令：素材、音乐、时间线、基础渲染、质检 |
 | `scripts/sources.py` | 检索任务/逐集覆盖表规划、实际下载文件收据；不冒充已搜索 |
+| `scripts/fxkit/` | 逐镜头合成器：杂帧守卫、闪烁与红线检查、剪辑密度、台词去BGM、libass 歌词层、歌词吸附、OTIO 导出、审片板 |
+| `scripts/analyze_mad.py`、`scripts/corpus/` | 拆解任意 MAD 并批量建立参考语料：切点、转场、对拍率、密度-响度、shotboard |
+| `references/14`–`19` | 精修红线、台词分离、AE 级合成、顶级 MAD 思路、42 部语料研究、OpenAdobe 后端（libass、Beat This!、TransNetV2、RIFE 等） |
+| `references/20-retrospective.md` | **经验库与自进化协议**：真人审片的红线速查、复盘账本；每个项目交付时把新教训写回 skill |
+| `references/corpus/` | 42 部 B 站顶尖 MAD 的逐镜笔记与指标（只有文字和数字，不含视频） |
 | `tests/` | 67项契约测试与合成素材端到端测试 |
 | `examples/` | 环境、真实测试输出、原创导演练习，不含未授权动画/音乐 |
 | `evals/` | 25个agent工作流评估案例；测试定义，不冒充已经跑过的模型评测 |
